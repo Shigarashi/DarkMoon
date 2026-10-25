@@ -59,7 +59,7 @@ That's it. Full setup details, including the optional Grok and Claude backends, 
 - **Connectors (MCP).** One-click Linear, Notion, Sentry, Supabase, Stripe, PostHog, Vercel, GitHub, browser, filesystem and more — or any MCP server. Remote services sign in through your browser (OAuth).
 - **Always clear who's answering.** Every reply carries a colored backend chip, and the top bar shows a live badge.
 - **Safety built in.** Workspace sandbox, plus approval prompts for shell, file writes, Python and connector tools.
-- **Customizable like Vencord.** 8 themes (Darkmoon default), install from URL/file, live QuickCSS, UI plugins, and appearance controls.
+- **Customizable.** 8 themes (Darkmoon default), install from URL/file, live QuickCSS, UI plugins, and appearance controls.
 - **Desktop niceties.** Logo splash on launch, its own taskbar icon, tray icon, global hotkey (`Ctrl+Alt+Space`), autostart, and an optional installer.
 
 ---
