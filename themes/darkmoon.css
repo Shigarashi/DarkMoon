@@ -1,0 +1,24 @@
+/**
+ * @name Darkmoon
+ * @author Darkmoon
+ * @description The signature look: near-black indigo night with moonlit silver-violet.
+ * @version 1.0
+ */
+:root {
+  --bg: #0b0b14; --bg-elev: #12121f; --bg-elev-2: #191929; --bg-hover: #222236;
+  --sidebar-bg: #08080f; --text: #e8e6f4; --text-muted: #9592b0; --text-faint: #5c5a78;
+  --border: #23223a; --accent: #a99cff; --accent-2: #6fd3ff; --accent-contrast: #0b0b14;
+  --user-bubble: #1f1d38; --code-bg: #07070d; --inline-code-bg: #1f1e33;
+  --local-color: #a99cff;
+  --selection: rgba(169, 156, 255, .3);
+  --hl-keyword: #b9a8ff; --hl-string: #9be3c9; --hl-number: #ffb38a; --hl-comment: #5f5c80;
+  --hl-function: #7cc8ff; --hl-title: #7cc8ff; --hl-type: #ffd78a; --hl-variable: #ff9fb8;
+}
+body {
+  background:
+    radial-gradient(700px 420px at 92% -8%, rgba(169, 156, 255, .13), transparent 60%),
+    radial-gradient(500px 300px at 8% 108%, rgba(111, 211, 255, .06), transparent 60%),
+    var(--bg);
+}
+.logo, .hero-logo { background: radial-gradient(circle at 35% 30%, #2c2a52, #0e0d1c); box-shadow: 0 0 22px rgba(169, 156, 255, .35); }
+#welcome h2 { letter-spacing: -.02em; }

@@ -1,0 +1,12 @@
+/**
+ * @name Midnight
+ * @author Darkmoon
+ * @description Deep-blue dark theme (the original look).
+ * @version 1.0
+ */
+:root {
+  --bg: #0f1117; --bg-elev: #161922; --bg-elev-2: #1d2130; --bg-hover: #232839;
+  --sidebar-bg: #12141c; --text: #e6e8ef; --text-muted: #8b90a3; --text-faint: #5d6275;
+  --border: #262b3b; --accent: #7c5cff; --accent-2: #4fd1c5; --accent-contrast: #fff;
+  --user-bubble: #262b42; --code-bg: #0b0d13; --inline-code-bg: #22273a;
+}

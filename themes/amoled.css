@@ -1,0 +1,14 @@
+/**
+ * @name AMOLED
+ * @author Darkmoon
+ * @description Pure black with crisp white text. Easy on OLED screens.
+ * @version 1.0
+ */
+:root {
+  --bg: #000; --bg-elev: #0a0a0a; --bg-elev-2: #121212; --bg-hover: #1b1b1b;
+  --sidebar-bg: #000; --text: #f2f2f2; --text-muted: #9a9a9a; --text-faint: #5c5c5c;
+  --border: #1f1f1f; --accent: #ffffff; --accent-2: #8a8a8a; --accent-contrast: #000;
+  --user-bubble: #161616; --code-bg: #050505; --inline-code-bg: #161616;
+  --shadow: none; --selection: rgba(255, 255, 255, .2);
+}
+.seg button.active { box-shadow: 0 0 0 1px #fff inset; }

@@ -1,0 +1,13 @@
+/**
+ * @name Forest
+ * @author Darkmoon
+ * @description Calm greens and warm parchment text.
+ * @version 1.0
+ */
+:root {
+  --bg: #121a15; --bg-elev: #18231c; --bg-elev-2: #1f2d24; --bg-hover: #27382d;
+  --sidebar-bg: #0f1612; --text: #e8e4d4; --text-muted: #a3a892; --text-faint: #6b7262;
+  --border: #2a3a2f; --accent: #7fbf7f; --accent-2: #d9b779; --accent-contrast: #0f1612;
+  --user-bubble: #2a3b2e; --code-bg: #0c120e; --inline-code-bg: #22312a;
+  --hl-keyword: #d9b779; --hl-string: #a8cc8c; --hl-comment: #6b7a66; --hl-function: #8fc1d4;
+}

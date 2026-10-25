@@ -1,0 +1,17 @@
+/**
+ * @name Mocha
+ * @author Darkmoon
+ * @description Cozy warm pastel dark theme.
+ * @version 1.0
+ */
+:root {
+  --bg: #1e1e2e; --bg-elev: #24243a; --bg-elev-2: #2c2c44; --bg-hover: #36364f;
+  --sidebar-bg: #181825; --text: #cdd6f4; --text-muted: #a6adc8; --text-faint: #6c7086;
+  --border: #313244; --accent: #cba6f7; --accent-2: #f5c2e7; --accent-contrast: #1e1e2e;
+  --user-bubble: #313150; --code-bg: #181825; --inline-code-bg: #313244;
+  --success: #a6e3a1; --warning: #f9e2af; --danger: #f38ba8;
+  --local-color: #a6e3a1; --grok-color: #cba6f7; --api-color: #89b4fa;
+  --hl-keyword: #cba6f7; --hl-string: #a6e3a1; --hl-number: #fab387; --hl-comment: #6c7086;
+  --hl-function: #89b4fa; --hl-title: #89b4fa; --hl-type: #f9e2af; --hl-variable: #f38ba8; --hl-meta: #94e2d5;
+  --radius: 16px;
+}

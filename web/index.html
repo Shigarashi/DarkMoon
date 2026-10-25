@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b14">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/static/manifest.webmanifest">
+  <link rel="icon" href="/static/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+  <title>Darkmoon</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" id="theme-css" href="">
+  <style id="appearance-css"></style>
+  <style id="quick-css"></style>
+  <script>window.LA_TOKEN = "__LA_TOKEN__"; window.LA_VERSION = "__LA_VERSION__";</script>
+  <script src="/static/vendor/marked.min.js"></script>
+  <script src="/static/vendor/purify.js"></script>
+  <script src="/static/vendor/highlight.min.js"></script>
+</head>
+<body>
+<div id="boot" aria-hidden="true"><div class="boot-wrap"><img src="/static/icons/icon-192.png" alt=""><b>Darkmoon</b></div></div>
+<div id="bg-layer"></div>
+<div id="app">
+  <!-- ─────────── Sidebar ─────────── -->
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><span></span></div>
+      <div class="brand-text"><b>Darkmoon</b><small id="brand-sub">local-first agent</small></div>
+      <button class="icon-btn" id="collapse-btn" title="Collapse sidebar (Ctrl+B)">⟨</button>
+    </div>
+    <button id="new-chat" class="primary-btn"><span>＋</span> New chat <kbd>Ctrl N</kbd></button>
+    <div class="search"><input id="search" type="search" placeholder="Search chats…" spellcheck="false"></div>
+    <nav id="conv-list" aria-label="Conversations"></nav>
+    <div class="sidebar-foot">
+      <div id="backend-status" title="Backend status — click to refresh"></div>
+      <button class="icon-btn" id="settings-btn" title="Settings (Ctrl+,)">⚙</button>
+    </div>
+  </aside>
+
+  <!-- ─────────── Main ─────────── -->
+  <main id="main">
+    <header id="topbar">
+      <button class="icon-btn" id="expand-btn" title="Show sidebar">☰</button>
+      <h1 id="conv-title" title="Click to rename">New chat</h1>
+      <div class="seg kind-seg" id="kind-seg" role="radiogroup" aria-label="Chat or Code mode">
+        <button data-kind="chat" title="Chat mode">Chat</button>
+        <button data-kind="code" title="Code mode: work on a project folder">‹/› Code</button>
+      </div>
+      <label class="mode-pick project-pick" id="project-pick" hidden title="Project folder for Code mode">
+        <span class="pp-icon">📁</span><select id="project-select" aria-label="Project"></select>
+      </label>
+      <button class="ghost-btn changes-btn" id="changes-btn" hidden title="Review changes in this project">Changes <b id="changes-count">0</b></button>
+      <div class="spacer"></div>
+      <div id="header-plugins"></div>
+      <label class="mode-pick" title="Who answers: Auto = Darkmoon locally first, cloud when needed">
+        <i id="mode-dot"></i><select id="mode-select" aria-label="Backend"></select>
+      </label>
+      <select id="model-select" title="Local model"></select>
+      <div id="live-badge" class="badge idle" title="Active backend"><i></i><span>Idle</span></div>
+    </header>
+
+    <section id="messages" aria-live="polite">
+      <div id="welcome">
+        <div class="hero-logo"><span></span></div>
+        <h2>What should we work on?</h2>
+        <p>Darkmoon runs on your PC. Start a message with <code>/grok</code>, <code>/claude</code> or <code>/gpt</code> to hand it to a cloud model.</p>
+        <div class="suggestions">
+          <button>Search the web for today's top tech news and summarize it</button>
+          <button>List the files in my workspace and describe the project</button>
+          <button>Write a Python script that renames photos by date, then test it</button>
+          <button>/claude Review the code in my workspace and suggest improvements</button>
+        </div>
+      </div>
+    </section>
+
+    <footer id="composer-wrap">
+      <div id="composer">
+        <textarea id="input" rows="1" placeholder="Message Darkmoon…  (/grok · /claude · /gpt to use the cloud)" spellcheck="true"></textarea>
+        <div class="composer-actions">
+          <span id="composer-extra"></span>
+          <button id="send" class="send-btn" title="Send (Enter)">➤</button>
+        </div>
+      </div>
+      <div id="slash-menu" hidden></div>
+      <div class="composer-hint"><span id="hint-left">Enter to send · Shift+Enter for a new line</span><span id="hint-right"></span></div>
+    </footer>
+  </main>
+</div>
+
+<!-- ─────────── Changes panel (Code mode) ─────────── -->
+<aside id="changes-panel" hidden aria-label="Project changes">
+  <div class="cp-head">
+    <div class="cp-title"><b id="cp-project">Project</b><small id="cp-branch"></small></div>
+    <button class="icon-btn" id="cp-refresh" title="Refresh">↻</button>
+    <button class="icon-btn" id="cp-close" title="Close">✕</button>
+  </div>
+  <div id="cp-files"></div>
+  <div id="cp-diff" class="cp-diff"></div>
+  <div class="cp-foot">
+    <input id="cp-message" placeholder="Commit message">
+    <div class="row">
+      <button class="primary-btn" id="cp-commit">Commit</button>
+      <button class="ghost-btn" id="cp-branch-btn" title="Create a branch and switch to it">Branch…</button>
+      <button class="ghost-btn" id="cp-pr" title="Push and open a GitHub pull request (needs gh)">Create PR</button>
+      <div class="spacer"></div>
+      <button class="danger-btn" id="cp-discard" title="Revert uncommitted changes to tracked files">Undo changes</button>
+    </div>
+  </div>
+</aside>
+<div id="drawer-backdrop" hidden></div>
+
+<!-- ─────────── Approval dialog ─────────── -->
+<div class="overlay" id="approval" hidden>
+  <div class="dialog approval-dialog" role="alertdialog" aria-modal="true" aria-labelledby="approval-title">
+    <div class="approval-head"><span id="approval-icon">⚠</span><div><h3 id="approval-title">Allow action?</h3><small id="approval-kind"></small></div></div>
+    <pre id="approval-detail"></pre>
+    <div class="dialog-actions">
+      <button class="ghost-btn" data-decision="deny">Deny <kbd>Esc</kbd></button>
+      <div class="spacer"></div>
+      <button class="ghost-btn" data-decision="always" title="Allow this kind of action until you restart the app">Always allow (this session)</button>
+      <button class="primary-btn" data-decision="allow">Allow once <kbd>Enter</kbd></button>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── Settings ─────────── -->
+<div class="overlay" id="settings" hidden>
+  <div class="dialog settings-dialog" role="dialog" aria-modal="true" aria-label="Settings">
+    <nav class="settings-nav">
+      <div class="settings-nav-title">Settings</div>
+      <button data-tab="appearance" class="active">🎨 Appearance</button>
+      <button data-tab="themes">🖌 Themes</button>
+      <button data-tab="quickcss">✎ QuickCSS</button>
+      <button data-tab="plugins">🧩 UI Plugins</button>
+      <div class="settings-nav-sep"></div>
+      <button data-tab="backends">🧠 Backends</button>
+      <button data-tab="connectors">🔌 Connectors</button>
+      <button data-tab="phone">📱 Phone</button>
+      <button data-tab="routing">🔀 Routing</button>
+      <button data-tab="tools">🛠 Tools</button>
+      <button data-tab="safety">🛡 Safety</button>
+      <button data-tab="general">⚙ General</button>
+      <div class="settings-nav-sep"></div>
+      <button data-tab="about">ℹ About</button>
+    </nav>
+    <div class="settings-body">
+      <button class="icon-btn settings-close" title="Close (Esc)">✕</button>
+      <div id="settings-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+/**
+ * @name Synthwave
+ * @author Darkmoon
+ * @description Neon pink and cyan on a purple night sky. Glow included.
+ * @version 1.0
+ */
+:root {
+  --bg: #1a1033; --bg-elev: #221544; --bg-elev-2: #2b1b55; --bg-hover: #36236a;
+  --sidebar-bg: #150c2b; --text: #f6eaff; --text-muted: #b9a3d9; --text-faint: #7b67a3;
+  --border: #3d2a72; --accent: #ff4fd8; --accent-2: #36f9f6; --accent-contrast: #1a1033;
+  --user-bubble: linear-gradient(135deg, #5a1f8c, #2b1b55); --code-bg: #120a24; --inline-code-bg: #2b1b55;
+  --local-color: #36f9f6; --grok-color: #ff4fd8; --api-color: #fede5d;
+  --hl-keyword: #fede5d; --hl-string: #ff8b39; --hl-number: #f97e72; --hl-comment: #848bbd;
+  --hl-function: #36f9f6; --hl-title: #36f9f6; --hl-type: #fe4450; --hl-variable: #ff7edb;
+  --font: "Orbitron", "Segoe UI", sans-serif;
+}
+body { background: radial-gradient(1200px 600px at 70% -10%, #3b1a6e 0%, transparent 60%), var(--bg); }
+.msg.user .bubble { background: var(--user-bubble); box-shadow: 0 0 18px rgba(255, 79, 216, .25); }
+.logo, .hero-logo { box-shadow: 0 0 22px #ff4fd8, 0 0 44px rgba(54, 249, 246, .4); }
+.primary-btn, .send-btn { box-shadow: 0 0 14px rgba(255, 79, 216, .55); }
+#welcome h2 { text-shadow: 0 0 12px #ff4fd8; }

@@ -1,0 +1,144 @@
+# Darkmoon configuration
+# On first launch this file is copied to your data folder:
+#   Windows: %APPDATA%\Darkmoon\config.toml
+#   macOS:   ~/Library/Application Support/Darkmoon/config.toml
+#   Linux:   ~/.config/darkmoon/config.toml
+# Almost everything is editable in the app (Settings). Saving from the app
+# rewrites the file without comments — this example keeps the documentation.
+
+[agent]
+name = "Darkmoon"
+workspace = "~/DarkmoonWorkspace"   # folder the agent may read/write and run commands in
+max_steps = 12                      # max tool-call rounds per message
+system_prompt = """You are Darkmoon, the user's personal AI agent running on their own PC.
+Use tools when they help: search the web for current facts, read files before editing them, and run code to verify answers. Paths are relative to the workspace folder.
+Be concise and direct. When a task is beyond you, call escalate_to_cloud."""
+# python = "C:\\Python312\\python.exe"   # interpreter for run_python in the .exe build
+
+# ── Local (free) ─────────────────────────────────────────────────────────────
+[ollama]
+host = "http://localhost:11434"
+model = "darkmoon"                  # your named model (see [darkmoon]); any tool-capable model works
+num_ctx = 8192                      # context window; raise if you have VRAM to spare
+temperature = 0.4
+keep_alive = "10m"
+
+[darkmoon]
+# "darkmoon" is an Ollama model built from this base with Darkmoon's identity:
+#   ollama create darkmoon -f models/darkmoon.Modelfile
+# Change the base here (or Settings › Backends) and click "Build / rebuild darkmoon".
+base_model = "qwen3.5:9b"
+auto_create = true                  # build it on startup if missing and the base is pulled
+
+# ── Subscription CLIs (use your existing logins, no API credits) ─────────────
+[grok_cli]
+enabled = true
+path = "grok"                       # or a full path
+model = ""                          # empty = CLI default (see `grok models`)
+output_format = "streaming-json"    # or "plain" if output looks odd
+timeout = 900
+extra_args = []                     # e.g. ["--sandbox", "workspace-write"]
+
+[claude_cli]
+enabled = true
+path = "claude"                     # Claude Code; sign in once by running `claude`
+model = ""                          # empty = CLI default; or sonnet / opus / haiku / full model name
+permission_mode = ""                # "" | acceptEdits | plan | auto | bypassPermissions (⚠)
+timeout = 900
+extra_args = []                     # e.g. ["--allowedTools", "Read,Grep,Glob"]
+
+# ── Pay-per-token APIs (Darkmoon's own tools run with these models) ──────────
+[xai_api]
+enabled = false
+api_key = ""                        # or XAI_API_KEY
+base_url = "https://api.x.ai/v1"
+model = "grok-4"                    # Settings suggests the models your key can use
+
+[claude_api]
+enabled = false
+api_key = ""                        # or ANTHROPIC_API_KEY (console.anthropic.com)
+base_url = "https://api.anthropic.com"
+model = "claude-sonnet-5-5"         # or claude-opus-5-5 / claude-haiku-5-5
+max_tokens = 8192
+
+[openai_compat]
+# Any OpenAI-style API: OpenAI, OpenRouter, Gemini, Groq, DeepSeek, Mistral,
+# Together, or a local LM Studio / llama.cpp / vLLM server. Reached with /gpt.
+enabled = false
+preset = "openai"
+label = "OpenAI"
+api_key = ""                        # or OPENAI_API_KEY (not needed for LM Studio)
+base_url = "https://api.openai.com/v1"
+model = ""                          # pick from suggestions in Settings once connected
+
+# ── Routing ──────────────────────────────────────────────────────────────────
+[routing]
+mode = "auto"                       # auto | ollama | grok_cli | claude_cli | xai_api | claude_api | openai_compat
+escalation_backend = "auto"         # auto = first available in escalation_order
+escalation_order = ["grok_cli", "claude_cli", "xai_api", "claude_api", "openai_compat"]
+escalate_on_failure = true
+escalate_complex = true
+complexity_threshold = 0.65         # 0..1, higher = escalate less often
+allow_self_escalation = true        # local model may call escalate_to_cloud
+grok_keywords = ["use grok", "ask grok", "/grok", "@grok"]
+claude_keywords = ["use claude", "ask claude", "/claude", "@claude"]
+openai_keywords = ["/gpt", "/openai", "@gpt"]
+local_keywords = ["use local", "/local", "@local", "/darkmoon"]
+
+# ── Safety ───────────────────────────────────────────────────────────────────
+[safety]
+require_approval_shell = true
+require_approval_write = true
+require_approval_python = true
+require_approval_mcp = true         # default for connector tools
+require_approval_tests = true       # Code mode test runs
+allow_outside_workspace = false
+shell_timeout = 120
+max_output_chars = 12000
+blocked_commands = [
+  "format ", "mkfs", "rm -rf /", "rm -rf ~", "del /s /q c:\\", "rd /s /q c:\\",
+  "shutdown", "reboot", "diskpart", "reg delete", "bcdedit", "cipher /w",
+  ":(){", "Remove-Item -Recurse C:\\", "Set-ExecutionPolicy",
+]
+
+# ── Code mode ────────────────────────────────────────────────────────────────
+[code]
+projects = []                       # folders you added in Code mode (each becomes a sandbox root)
+max_steps = 30                      # coding tasks need more tool rounds
+test_command = ""                   # override auto-detection, e.g. "npm test"
+
+# ── Phone access (off by default) ────────────────────────────────────────────
+[phone]
+enabled = false                     # Settings › Phone shows the pairing QR code
+port = 8766
+
+# ── Connectors (MCP servers) — easiest to add in Settings › Connectors ───────
+# Local server launched by Darkmoon (${workspace} = your workspace folder):
+# [mcp.servers.filesystem]
+# transport = "stdio"
+# command = "npx"
+# args = ["-y", "@modelcontextprotocol/server-filesystem", "${workspace}"]
+# require_approval = true
+#
+# Remote server with browser sign-in (OAuth) — click "Sign in" in Settings › Connectors:
+# [mcp.servers.linear]
+# transport = "http"
+# url = "https://mcp.linear.app/mcp"
+#
+# Remote server with a token header:
+# [mcp.servers.github]
+# transport = "http"
+# url = "https://api.githubcopilot.com/mcp/"
+# [mcp.servers.github.headers]
+# Authorization = "Bearer YOUR_GITHUB_TOKEN"
+
+[ui]
+port = 0                            # 0 = pick a free port
+hotkey = "<ctrl>+<alt>+<space>"     # global show/hide (pynput format)
+minimize_to_tray = true
+start_hidden = false
+width = 1180
+height = 800
+
+[tools]
+disabled = []                       # tool names to turn off, e.g. ["run_shell"]

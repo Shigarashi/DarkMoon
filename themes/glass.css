@@ -1,0 +1,18 @@
+/**
+ * @name Glass
+ * @author Darkmoon
+ * @description Frosted translucent panels over a colorful gradient. Pairs well with a background image.
+ * @version 1.0
+ */
+:root {
+  --bg: #0d0f1e; --bg-elev: rgba(255, 255, 255, .06); --bg-elev-2: rgba(255, 255, 255, .08); --bg-hover: rgba(255, 255, 255, .12);
+  --sidebar-bg: rgba(10, 12, 28, .45); --text: #f3f4ff; --text-muted: #b4b8d6; --text-faint: #7d82a8;
+  --border: rgba(255, 255, 255, .12); --accent: #6ea8ff; --accent-2: #c58bff; --accent-contrast: #fff;
+  --user-bubble: rgba(110, 168, 255, .22); --code-bg: rgba(0, 0, 0, .35); --inline-code-bg: rgba(255, 255, 255, .1);
+  --glass: blur(18px) saturate(140%); --shadow: 0 8px 32px rgba(0, 0, 0, .35);
+}
+body { background: radial-gradient(900px 600px at 10% 10%, #3a2a8a, transparent 60%),
+                    radial-gradient(800px 600px at 90% 30%, #0c6b8a, transparent 60%),
+                    radial-gradient(900px 700px at 50% 110%, #7a2a6e, transparent 60%), #0d0f1e; }
+#composer, .dialog, .tool-card, .theme-card, .plugin-row { backdrop-filter: blur(18px) saturate(140%); }
+.dialog { background: rgba(20, 22, 44, .75); }

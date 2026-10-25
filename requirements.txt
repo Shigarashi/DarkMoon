@@ -1,0 +1,11 @@
+# Darkmoon — Python 3.11+ (3.12 recommended on Windows)
+starlette>=0.40
+uvicorn>=0.30
+httpx>=0.27
+ddgs>=9.0            # DuckDuckGo web search (no API key)
+
+# Desktop shell (optional — without these, run with --browser)
+pywebview>=5.0       # native window (Edge WebView2 on Windows)
+pystray>=0.19        # system tray icon
+Pillow>=10.0         # tray icon image
+pynput>=1.7          # global hotkey

@@ -1,0 +1,19 @@
+/**
+ * @name Daylight
+ * @author Darkmoon
+ * @description Clean, bright light theme.
+ * @version 1.0
+ */
+:root {
+  --bg: #f7f7fb; --bg-elev: #ffffff; --bg-elev-2: #f0f1f6; --bg-hover: #e8e9f1;
+  --sidebar-bg: #eef0f6; --text: #1d2030; --text-muted: #5f6478; --text-faint: #9a9fb2;
+  --border: #dfe1ea; --accent: #5b4bdb; --accent-2: #0ea5a4; --accent-contrast: #fff;
+  --user-bubble: #e6e3ff; --user-text: #1d2030; --code-bg: #f6f7fa; --inline-code-bg: #eceef4;
+  --success: #1f9d63; --warning: #b7791f; --danger: #d43c43;
+  --local-color: #1f9d63; --grok-color: #7b4bd6; --api-color: #2b6fd6;
+  --scrollbar: #cfd2de; --selection: rgba(91, 75, 219, .2);
+  --shadow: 0 10px 30px rgba(30, 35, 60, .10);
+  --hl-keyword: #8b3fd9; --hl-string: #22863a; --hl-number: #b45309; --hl-comment: #8c93a8;
+  --hl-function: #2563eb; --hl-title: #2563eb; --hl-type: #b45309; --hl-attr: #b45309;
+  --hl-variable: #c2410c; --hl-meta: #0e7490;
+}
